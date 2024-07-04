@@ -21,7 +21,23 @@
     </div>
     <?php
     require ('reusables/connect.php');
-    $query = 'SELECT * FROM earthquake_perception_dataset';
+    // Join query to get data from both tables
+    $query = '
+    SELECT 
+        e.*, 
+        u.name, 
+        u.email, 
+        u.phone, 
+        ev.event_name, 
+        ev.event_date, 
+        ev.location
+    FROM 
+        earthquake_perception_dataset e
+    JOIN 
+        user_details u ON e.user_id = u.user_id
+    JOIN 
+        events ev ON e.event_id = ev.event_id
+    ';
     $earthquake_perception_dataset = mysqli_query($connect, $query);
     ?>
     <div class="container-fluid">
